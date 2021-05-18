@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
+const factUrl = 'https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1';
 function App() {
+  const [fact, setFact] = useState("");
+
+  useEffect(() => {
+    getDogFact();
+  },[]);
+
+  function getDogFact() {
+    fetch(factUrl).then(f => {
+      setFact(f);
+    })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="header">Dog facts</h1>
+        <h3>{fact}</h3>
     </div>
   );
 }
