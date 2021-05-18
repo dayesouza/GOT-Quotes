@@ -1,23 +1,34 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-const factUrl = 'https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1';
+const factUrl = 'https://game-of-thrones-quotes.herokuapp.com/v1/random';
 function App() {
   const [fact, setFact] = useState("");
 
   useEffect(() => {
-    getDogFact();
+    getFactFromUrl();
   },[]);
 
-  function getDogFact() {
-    fetch(factUrl).then(f => {
-      setFact(f);
+  function getFactFromUrl() {
+    fetch(factUrl)
+    .then(async response => {
+      return response.json();
     })
+    .then((data) => {
+      setFact(data)
+      console.log(data)
+    })
+
   }
   return (
     <div className="App">
-      <h1 className="header">Dog facts</h1>
-        <h3>{fact}</h3>
+      <h1 className="header">Game of Thrones Quotes</h1>
+      {fact && (
+        <>
+          <h3>{fact.sentence}</h3>
+          <small>- {fact.character.name}</small>
+        </>
+      )}
     </div>
   );
 }
